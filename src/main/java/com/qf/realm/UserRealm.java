@@ -23,6 +23,8 @@ public class UserRealm extends AuthorizingRealm {
     private UserService userService;
 
 
+
+
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         /*//获取的当前账户用户名
