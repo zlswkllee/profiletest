@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.mapper.ProfileMapper">
+    <resultMap id="rr" type="profile">
+        <id property="id" column="id"></id>
+        <result property="name" column="name"></result>
+        <result property="birthday" column="birthday"></result>
+        <result property="gender" column="gender"></result>
+        <result property="career" column="career"></result>
+        <result property="address" column="address"></result>
+        <result property="mobile" column="mobile"></result>
+        <result property="picture" column="picture"></result>
+
+        <association property="user" javaType="user">
+            <id property="uid" column="uid"></id>
+            <result property="username" column="username"></result>
+
+        </association>
+    </resultMap>
+    <select id="getAllProfile" parameterType="int" resultMap="rr">
+        select id,name,birthday,gender,career,address,mobile,picture,u.uid as uid,username from profile p join user u on p.uid = u.uid where u.uid=#{id}
+    </select>
+    <select id="getProfileById" resultType="profile">
+        select * from profile where id = #{id}
+    </select>
+    <update id="updateProfile" parameterType="profile">
+        update profile
+        <set>
+            name=#{name},birthday=#{birthday},gender=#{gender},career=#{career},address=#{address},mobile=#{mobile},
+            <if test="picture!=null">
+                picture=#{picture}
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+    <delete id="deleteProfile" >
+        delete from profile where id = #{id}
+    </delete>
+</mapper>

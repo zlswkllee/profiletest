@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean class="org.apache.shiro.web.mgt.DefaultWebSecurityManager" id="securityManager">
+        <property name="realm" ref="userRealm"></property>
+    </bean>
+    <bean class="com.qf.realm.UserRealm" id="userRealm"></bean>
+    <!--ShiroFilterFactoryBean是一个工厂类，它可以创建Filter-->
+    <bean class="org.apache.shiro.spring.web.ShiroFilterFactoryBean" id="shiroFilter">
+        <!-- 认证提交地址，如果没有认证将会请求此地址进行认证 ，请求此地址将由 formAuthenticationFilter 进行表单认证 -->
+        <property name="loginUrl" value="/user/log"></property>
+        <property name="successUrl" value="/profile/home"></property>
+        <property name="unauthorizedUrl" value="/user/unauthorize"></property>
+        <property name="securityManager" ref="securityManager"></property>
+        <!--配置过滤器链 不同的验证使用不同的过滤器 由工厂bean创建-->
+        <property name="filterChainDefinitions">
+            <!--anon过滤器表示不做验证过滤 -->
+            <!-- authc过滤器表示访问时需进行登录验证的过滤 -->
+            <!--perms过滤器表示访问时需要权限验证的过滤 -->
+            <value>
+                /leave=perms[user:add]
+                /leaveList=perms[user:update]
+                /js/** = anon
+                /css/** = anon
+                /user/log=anon
+                /user/loginR=anon
+                /**=authc
+            </value>
+        </property>
+    </bean>
+
+</beans>

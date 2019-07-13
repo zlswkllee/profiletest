@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+        <!--开启延时加载 关闭积极加载-->
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <setting name="aggressiveLazyLoading" value="false"/>
+
+    </settings>
+    <!--为每一个类起别名 方便以首字母小写调用-->
+    <typeAliases>
+        <package name="com.qf.pojo"/>
+    </typeAliases>
+    <!--分页插件-->
+    <plugins>
+        <plugin interceptor="com.github.pagehelper.PageHelper">
+            <property name="dialect" value="mysql"/>
+        </plugin>
+        <!--5.0版本pagehelper-->
+        <!-- <plugin interceptor="com.github.pagehelper.PageInterceptor">
+                <property name="helperDialect" value="mysql"/>
+        </plugin> -->
+    </plugins>
+
+
+</configuration>
