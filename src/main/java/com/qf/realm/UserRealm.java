@@ -21,6 +21,8 @@ import java.util.Set;
 public class UserRealm extends AuthorizingRealm {
     @Autowired
     private UserService userService;
+
+
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         /*//获取的当前账户用户名
